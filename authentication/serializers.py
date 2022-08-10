@@ -6,7 +6,7 @@ from accounts.models import CustomUser as User
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from authentication.models import ActivateToken
-from greeeth.utils import send_email
+from greeeth.utils import TokenTemplate, send_email
 from rest_framework import serializers, status
 
 from rest_framework.response import Response
@@ -72,7 +72,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         otp = ActivateToken.objects.create(user=user)
         user.is_active=False
         user.save()
-        send_email(email,otp.token,"activate")
+
+        temp = TokenTemplate(otp.token,'Activation')
+
+        send_email(recepient=[email],subject=temp['subject'],message=temp['message'])
 
         return user
 
@@ -103,18 +106,24 @@ class AccountActivateSerializer(serializers.Serializer):
             raise NotFoundValidator('User Not Found') from e
 
 
+
+
+
 class ResetActivateSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     def create(self,validated_data):
         email = validated_data['email']
-        print(email)
         try:
             user = User.objects.get(email=email)
             if activation := user.activate_token:
                 activation.delete()
             otp = ActivateToken.objects.create(user=user)
-            send_email(user.email,otp.token,'Activation')
+
+
+            temp = TokenTemplate(otp.token,'reset')
+            
+            send_email(recepient=[user.email],subject=temp['subject'],message=temp['message'])
             return "success"
         except Exception as e:
             raise NotFoundValidator('User Not Found') from e

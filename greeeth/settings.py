@@ -122,7 +122,7 @@ DATABASES = {
         'NAME':os.environ.get("DB_NAME"),
         'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
+        'HOST': 'greeeth_db',
         'PORT': os.environ.get("DB_PORT"),
     }
 }
@@ -163,11 +163,11 @@ USE_TZ = True
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = os.environ.get("EMAIL_HOST_ZOHO")
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER_ZOHO")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD_ZOHO")
 
 
 

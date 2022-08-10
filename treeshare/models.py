@@ -1,10 +1,11 @@
 from django.db import models
+from greeeth.utils import send_email
 from trees.models import *
 from accounts.models import CustomUser as User
 from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from sendy import gmail_send_message
+
 from awarding.models import *
 from wallet.models import Credit
 
@@ -38,7 +39,7 @@ def sendShareEmail(self,instance,**kwargs):
     body += f"Use This code to unlock to tree {instance.share_code} \n"
     body += "Via https://greeeth.com"
 
-    gmail_send_message(subject=subject,recepient=[instance.recepient_email],body=body)
+    send_email(subject=subject,recepient=[instance.recepient_email],message=body)
 
 
 @receiver(post_save,sender=TreeShare)

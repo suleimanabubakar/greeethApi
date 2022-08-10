@@ -1,27 +1,25 @@
 from django.core.mail import EmailMessage
 
 from django.conf import settings
-from sendy import gmail_send_message
+from django.http import JsonResponse
+
+def send_email(recepient,message,subject):    
+    EmailMessage(subject=subject,from_email=settings.EMAIL_HOST_USER,body=message,
+                        to=recepient)
 
 
-def send_email(email, token, em_type):
-    if em_type=="reset":    
 
-
+def TokenTemplate(token,t_type):
+    if t_type=="reset":    
         subject="Password Reset Token"
-        t_messange = "Reset Your Password"
+        message = "Reset Your Password \n"
 
 
 
     else:
         subject="Account Activation Token"
-        t_messange = "Activate Your Account"
+        message = "Activate Your Account \n"
 
+    message += f"Use the code below \n {token}"
 
-    
-    gmail_send_message(subject=subject,
-                            body=f"Use the code to {t_messange} \n {token}",
-                        recepient=[email])
-
-
-
+    return {'subject':subject,'message':message}

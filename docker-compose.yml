@@ -1,0 +1,19 @@
+services:
+    api:
+        build: .
+        container_name: greeeth-api
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/user/src/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - pgdb
+    pgdb:
+        image: mdillon/postgis
+        container_name: greeeth_db
+        environment:
+        - POSTGRES_DB=${DB_NAME}
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+        
