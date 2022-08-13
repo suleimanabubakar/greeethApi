@@ -20,4 +20,4 @@ class TreeAcceptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TreeShare
-        fields = ['tree','share_code','recepient','received_on','status'],
+        fields = ['tree','share_code','recepient','received_on','status']

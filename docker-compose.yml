@@ -3,6 +3,7 @@ services:
         build: .
         container_name: greeeth-api
         command: python manage.py runserver 0.0.0.0:8000
+        tty: true
         volumes:
             - .:/user/src/app
         ports:
@@ -16,4 +17,4 @@ services:
         - POSTGRES_DB=${DB_NAME}
         - POSTGRES_USER=${DB_USER}
         - POSTGRES_PASSWORD=${DB_PASSWORD}
-        
+    

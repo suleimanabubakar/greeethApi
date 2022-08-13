@@ -21,8 +21,25 @@ from django.conf.urls.static import static
 from rest_framework_swagger.views import get_swagger_view
 from rest_framework.routers import SimpleRouter
 from projects.views import *
-schema_view = get_swagger_view(title='Greeeth API')
 
+
+
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Greeeth API",
+      default_version='v1',
+      description="Greeeth ApiEndpoints",
+      terms_of_service="",
+      contact=openapi.Contact(email="info@greeeth.com"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
 
 router = SimpleRouter()
 router.register('projectdetails',viewset=ProjectDetails,basename="project_details")
@@ -34,8 +51,12 @@ urlpatterns = [
     path('maintainance/',include('maintainance.urls')),
     path('projects/',include('projects.urls')),
     path('treeshare/',include('treeshare.urls')),
-    path('docs/', schema_view),
     path('wallet/',include('wallet.urls')),
     path('',include(router.urls)),
-    path('awards/',include('awarding.urls'))
+    path('awards/',include('awarding.urls')),
+
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'), 
+
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

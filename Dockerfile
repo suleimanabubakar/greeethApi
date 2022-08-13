@@ -1,5 +1,7 @@
 FROM python:3
+
 ENV PYTHONNONBUFFERED=1
+
 WORKDIR /usr/src/app
 
 RUN apt-get update \
@@ -11,8 +13,10 @@ COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 
-
-
+EXPOSE 8000
 
 COPY . /usr/src/app
 
+
+
+# CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "greeeth.wsgi"]

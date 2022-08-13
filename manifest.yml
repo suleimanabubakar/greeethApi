@@ -1,0 +1,4 @@
+applications:
+ -name: Greeeth
+  random-route:true
+  memory: 512M
