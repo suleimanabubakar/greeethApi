@@ -1,4 +1,7 @@
+---
 applications:
- -name: Greeeth
-  random-route:true
+- instances: 1
+  name: greeeth
+  buildpack: python_buildpack
+  command: gunicorn -greeth.wsgi -b 0.0.0.0:8000
   memory: 512M

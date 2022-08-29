@@ -13,10 +13,11 @@ COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 
-EXPOSE 8000
 
 COPY . /usr/src/app
 
+# EXPOSE 8000
 
+CMD gunicorn greeeth.wsgi:application --bind 0.0.0.0:$PORT
 
 # CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "greeeth.wsgi"]
