@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'wallet',
     'treeshare',
     'corsheaders',
+    'carbonfootprint',
 
 ]
 

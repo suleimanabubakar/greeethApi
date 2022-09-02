@@ -62,13 +62,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             'first_name':{'required':True},
             'last_name':{'required':True},
             'email':{'required':True},
+            'password':{'write_only':True}
         }
+      
 
     def create(self,validated_data):
         user = User.objects.create_user(**validated_data)
         email = validated_data['email']
-        group, created = Group.objects.get_or_create(name="Student")
-        user.groups.add(group)
         otp = ActivateToken.objects.create(user=user)
         user.is_active=False
         user.save()

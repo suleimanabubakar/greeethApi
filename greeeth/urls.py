@@ -54,6 +54,7 @@ urlpatterns = [
     path('wallet/',include('wallet.urls')),
     path('',include(router.urls)),
     path('awards/',include('awarding.urls')),
+    path('carbonfootprint/',include('carbonfootprint.urls')),
 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'), 

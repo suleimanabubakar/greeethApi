@@ -1,11 +1,10 @@
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail
 
 from django.conf import settings
 from django.http import JsonResponse
 
 def send_email(recepient,message,subject):    
-    EmailMessage(subject=subject,from_email=settings.EMAIL_HOST_USER,body=message,
-                        to=recepient)
+    send_mail(subject=subject,from_email=settings.EMAIL_HOST_USER,message=message,recipient_list=recepient,fail_silently=False)
 
 
 
