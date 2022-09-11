@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 
@@ -58,3 +61,23 @@ class CustomUser(AbstractUser):
     @property
     def role(self):
         return self.groups.all().first() or 'N/A'
+
+
+@receiver(post_save,sender=CustomUser)
+def create_profile(sender,instance,created, **kwargs):
+    if created:
+        Profile.objects.get_or_create(user=instance)
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser,related_name="profile",on_delete=models.CASCADE)
+    is_set = models.BooleanField(default=False)
+    country = models.CharField(max_length=50,null=True)
+    city = models.CharField(max_length=50,null=True)
+
+
+@receiver(post_save, sender=Profile)
+def update_is_set(sender, instance, created, **kwargs):
+    if not created and instance.country and instance.city and not instance.is_set:
+        instance.is_set = True
+        instance.save()
+

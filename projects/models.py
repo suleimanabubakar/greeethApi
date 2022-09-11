@@ -36,9 +36,10 @@ class Project(models.Model):
 
 # auto create owner as administrator and part of the project
 @receiver(post_save, sender=Project)
-def auto_create_admin(sender, instance, **kwargs):
-    instance.addAdmins(user=instance.created_by)
-    instance.projectUser(user=instance.created_by,status='active')
+def auto_create_admin(sender, instance, created, **kwargs):
+    if  created:
+        instance.addAdmins(user=instance.created_by)
+        instance.projectUser(user=instance.created_by,status='active')
 
 
 class ProjectAdmin(models.Model):

@@ -59,11 +59,13 @@ INSTALLED_APPS = [
     'treeshare',
     'corsheaders',
     'carbonfootprint',
+    'organisations'
 
 ]
 
 CORS_ALLOWED_ORIGINS = [
 "https://greeeth.com",
+"https://www.greeeth.com",
 "http://127.0.0.1:3000",
 "http://localhost:3000",
 ]
