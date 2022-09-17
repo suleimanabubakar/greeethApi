@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:project>/admins',AssignAdministrators.as_view()),
     path('<int:project>/add',UserProjectAdd.as_view()),
     path('<int:pk>/approve',ApproveProject.as_view()),
+    path('<int:project>/addOrg',AddProjectOrganisation.as_view()),
 ]

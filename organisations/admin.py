@@ -7,7 +7,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name",]
 @admin.register(Organisation)
 class Admin(admin.ModelAdmin):
-    list_display = ["name","address","created_on","created_by","type"]
+    list_display = ["name","address","created_on","created_by","type","id"]
 
 @admin.register(OrganisationOfficial)
 class OrganisationOfficialAdmin(admin.ModelAdmin):

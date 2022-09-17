@@ -52,3 +52,15 @@ class ApproveProject(UpdateAPIView):
             return Response({"message":"Successfully Approved"},status=status.HTTP_200_OK)
 
 
+
+class AddProjectOrganisation(CreateAPIView):
+    serializer_class = AddOrganisationToProjectSerializer
+    queryset = OrganisationInProject.objects.all()
+
+
+    def perform_create(self, serializer):
+        serializer.save(project=get_object_or_404(Project,pk=self.kwargs['project']))
+        if not serializer.is_valid():
+            return Response({"message":"Organisation Already Exists"},status=status.HTTP_400_BAD_REQUEST)
+
+

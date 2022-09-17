@@ -13,6 +13,14 @@ class Organisation(models.Model):
     created_on  = models.DateTimeField(auto_now_add=True)
     created_by  = models.ForeignKey(CustomUser,related_name="created_companies",on_delete=models.CASCADE)
     type = models.ForeignKey(Category,related_name="institutions",on_delete=models.CASCADE)
+    phone_no = models.CharField(max_length=10,null=True)
+    linkedin = models.URLField(null=True)
+    instagram = models.URLField(null=True)
+    facebook = models.URLField(null=True)
+    twitter = models.URLField(null=True)
+    tiktok = models.URLField(null=True)
+    year_founded = models.CharField(max_length=10,null=True)
+    website = models.URLField(null=True)
 
     def addUser(self,user) -> 'OrganisationOfficial':
         self.officials.create(user=user)
@@ -21,7 +29,7 @@ class Organisation(models.Model):
 @receiver(post_save,sender=Organisation)
 def add_official(sender,instance,created, **kwargs):
     if created:
-        return instance.addOfficial(user=instance.created_by)
+        return instance.addUser(user=instance.created_by)
 
 
 class OrganisationOfficial(models.Model):

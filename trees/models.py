@@ -14,4 +14,7 @@ class Tree(models.Model):
     location = models.PointField(geography=True,)
     height = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to=image_location)
+    tree_type = models.CharField(max_length=40,null=True)
+
+
 

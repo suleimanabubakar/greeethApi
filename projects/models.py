@@ -3,6 +3,8 @@ from accounts.models import CustomUser as User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
+
+from organisations.models import Organisation
 # Create your models here.
 
 
@@ -17,6 +19,7 @@ class Project(models.Model):
     status = models.CharField(max_length=30,choices=project_status,default="active")
     ended_on = models.DateTimeField(null=True)
     location = models.CharField(max_length=50)
+    
 
     # adding administrators
     def addAdmins(self,user) -> 'ProjectAdmin':
@@ -30,6 +33,7 @@ class Project(models.Model):
             projectUser.approved_by = self.created_by
             projectUser.save()
         return projectUser
+
 
     def __str__(self) -> str:
         return self.name
@@ -48,6 +52,9 @@ class ProjectAdmin(models.Model):
     project = models.ForeignKey(Project,on_delete=models.CASCADE,related_name="admins")
     class Meta:
         unique_together = ['user','project']
+
+    
+
 
 class UserProject(models.Model):
     project_choices = [
@@ -72,3 +79,13 @@ class UserProject(models.Model):
         self.approved_by=user
         self.save()
         return self
+
+    
+
+class OrganisationInProject(models.Model):
+    project = models.ForeignKey(Project,related_name="organisations",on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation,related_name="projects",on_delete=models.CASCADE)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['project','organisation']

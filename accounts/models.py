@@ -73,7 +73,12 @@ class Profile(models.Model):
     is_set = models.BooleanField(default=False)
     country = models.CharField(max_length=50,null=True)
     city = models.CharField(max_length=50,null=True)
-
+    phone_no = models.CharField(max_length=10,null=True)
+    linkedin = models.URLField(null=True)
+    instagram = models.URLField(null=True)
+    facebook = models.URLField(null=True)
+    twitter = models.URLField(null=True)
+    tiktok = models.URLField(null=True)
 
 @receiver(post_save, sender=Profile)
 def update_is_set(sender, instance, created, **kwargs):

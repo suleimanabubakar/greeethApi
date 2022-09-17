@@ -15,3 +15,9 @@ class ProjectAdminAdmin(admin.ModelAdmin):
 @admin.register(UserProject)
 class UserProjectAdmin(admin.ModelAdmin):
     list_display = ["id","user","project","status","requested_on","approved_on","approved_by"]
+
+
+
+@admin.register(OrganisationInProject)
+class OrganisationInProjectAdmin(admin.ModelAdmin):
+    list_display = ["project","organisation","added_on"]
