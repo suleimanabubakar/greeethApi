@@ -4,9 +4,12 @@ from django.db import models
 
 class Currency(models.Model):
     name = models.CharField(max_length=30,unique=True)
-    abbr = models.CharField(max_length=30)
 
-class PointToCurrency:
+    def __str__(self) -> str:
+        return self.name
+
+class PointToCurrency(models.Model):
     points = models.IntegerField()
     currency = models.OneToOneField(Currency,on_delete=models.CASCADE,related_name="point")
     created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.DateTimeField(auto_now_add=True)

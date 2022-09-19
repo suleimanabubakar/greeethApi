@@ -17,11 +17,11 @@ class Wallet(models.Model):
 
     @property
     def total_debit(self):
-        return self.debits.all().aggregate(total=Sum('point'))['total']
+        return self.debits.all().aggregate(total=Sum('point'))['total'] or 0
     
     @property
     def total_credit(self):
-        return self.credits.all().aggregate(total=Sum('point'))['total']
+        return self.credits.all().aggregate(total=Sum('point'))['total'] or 0
 
     @property
     def calculated_balance(self):
@@ -30,6 +30,9 @@ class Wallet(models.Model):
     def updateWallet(self):
         self.balance=self.calculated_balance
         self.save()
+    
+    def create_credit(self,obj,points):
+        self.credits.create(content_object=obj,point=points)
 
 class Credit(models.Model):
     wallet = models.ForeignKey(Wallet,related_name="credits",on_delete=models.CASCADE)
@@ -51,5 +54,6 @@ class Debit(models.Model):
 
 @receiver(post_save,sender=Credit)
 @receiver(post_save,sender=Debit)
-def updateWalletBalance(self, instance, **kwargs):
-    instance.wallet.updateWallet()
+def updateWalletBalance(sender,created, instance, **kwargs):
+    if created:
+        instance.wallet.updateWallet()

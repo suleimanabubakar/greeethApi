@@ -59,7 +59,9 @@ INSTALLED_APPS = [
     'treeshare',
     'corsheaders',
     'carbonfootprint',
-    'organisations'
+    'organisations',
+    'points',
+    'coupon',
 
 ]
 

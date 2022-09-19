@@ -10,7 +10,7 @@ from .models import *
 
 class MyProfile(APIView):
     def get(self,request):
-        profile, created = Profile.objects.get_or_create(request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
         return Response(ProfileSerializer(profile).data)
 
     def put(self,request):
