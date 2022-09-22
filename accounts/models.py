@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Sum
 
 
 
@@ -61,7 +62,23 @@ class CustomUser(AbstractUser):
     @property
     def role(self):
         return self.groups.all().first() or 'N/A'
+    
+    @property
+    def total_trees_planted(self):
+        return self.trees_planted.count() or 0
 
+    @property
+    def total_footprint(self):
+        return self.footprints.all().aggregate(total=Sum('total'))['total'] or 0
+    
+    @property
+    def total_points(self):
+        return self.wallet.balance if self.wallet else 0
+
+    
+    @property
+    def total_offset(self):
+        return self.total_trees_planted*21
 
 @receiver(post_save,sender=CustomUser)
 def create_profile(sender,instance,created, **kwargs):
@@ -79,6 +96,7 @@ class Profile(models.Model):
     facebook = models.URLField(null=True)
     twitter = models.URLField(null=True)
     tiktok = models.URLField(null=True)
+
 
 @receiver(post_save, sender=Profile)
 def update_is_set(sender, instance, created, **kwargs):

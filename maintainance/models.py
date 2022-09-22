@@ -13,3 +13,6 @@ class TreeMaintainance(models.Model):
     location = models.PointField(geography=True,)
     height = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to=image_location)
+
+    class Meta:
+        ordering = ['-pk']

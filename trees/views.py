@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView,RetrieveAPIView
 from .models import *
 from .serializers import *
 
@@ -11,3 +11,10 @@ class TreePlantation(ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(planter=self.request.user)
+
+
+class TreeRetreive(RetrieveAPIView):
+    serializer_class = RetreiveTreeSerializer
+    queryset = Tree.objects.all()
+
+    

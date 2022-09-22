@@ -8,3 +8,10 @@ class MaintainSerializer(serializers.ModelSerializer):
     class Meta:
         model = TreeMaintainance
         fields = '__all__'
+
+
+
+class MaintainanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TreeMaintainance
+        fields = ['image','height','maintained_on']
