@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'organisations',
     'points',
     'coupon',
+    'weather',
 
 ]
 
@@ -183,6 +184,11 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER_ZOHO")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD_ZOHO")
+
+
+
+GEO_REVERSE_KEY = os.environ.get("GEO_REVERSE_KEY")
+WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY")
 
 
 
