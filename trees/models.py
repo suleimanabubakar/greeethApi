@@ -32,16 +32,16 @@ class Tree(models.Model):
 
     @property
     def address(self):
+
         if self.planted_at:
             return self.planted_at
         get_loc = get_reverse_location(self.location)
+        print(get_loc.status_code)
         if get_loc.status_code==200:
             encoded = get_loc.json()
             city = encoded.get('results')[0]['formatted']
-        elif get_loc.status == 400:
-            city = 'N/A'
-        
-    
+        elif get_loc.status_code == 400:
+            city = "N/A"
         self.planted_at=city
         self.save() 
         return self.planted_at
@@ -70,7 +70,9 @@ class Tree(models.Model):
         return 40 <= humidity >= 50 and 38 <= temperature >= 60
 
 
-
+    @property
+    def last_maintained(self):
+        return self.maintainances.first().maintained_on if self.maintainances.first() else 'N/A'
 
 
     def addWeatherChecker(self,de_date,timing,temp,humidity,speed,uvIndex,uvDesc,nar,we):

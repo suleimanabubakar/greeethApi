@@ -6,4 +6,4 @@ from .models import *
 
 @admin.register(Tree)
 class TreeAdmin(admin.ModelAdmin):
-    list_display = ["id","created_on","planter","location","height","image","age"]
+    list_display = ["id","created_on","planter","location","height","image","age","address","last_maintained"]

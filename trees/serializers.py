@@ -5,14 +5,14 @@ from .models import *
 from weather.serializers import *
 class TreeSerializer(serializers.ModelSerializer):
     planter = serializers.StringRelatedField(read_only=True)
+    
     class Meta:
         model = Tree
-        fields = ['id','planter','created_on','location','height','image','tree_type','age','to_be_maintained']
+        fields = ['id','planter','created_on','location','height','image','tree_type','age','to_be_maintained','address','last_maintained']
+        read_only_fields = ['address','last_maintained']
         extra_kwargs = {
             'planter':{'write_only':True},
-            'location':{'write_only':True},
             'image':{'write_only':True},
-            'tree_type':{'write_only':True},
         }
 
 
