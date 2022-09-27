@@ -14,7 +14,7 @@ class Tree(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     planter = models.ForeignKey(User,related_name="trees_planted",on_delete=models.CASCADE)
     location = models.PointField(geography=True,)
-    height = models.DecimalField(max_digits=10, decimal_places=2)
+    height = models.CharField(max_length=30)
     image = models.ImageField(upload_to=image_location)
     tree_type = models.CharField(max_length=40,null=True)
     planted_at = models.CharField(null=True,max_length=90)

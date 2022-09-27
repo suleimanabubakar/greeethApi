@@ -11,7 +11,7 @@ class TreeMaintainance(models.Model):
     maintained_on = models.DateTimeField(auto_now=True)
     maintained_by = models.ForeignKey(User,related_name="tree_maintaince",on_delete=models.CASCADE)
     location = models.PointField(geography=True,)
-    height = models.DecimalField(max_digits=10, decimal_places=2)
+    height = models.CharField(max_length=40)
     image = models.ImageField(upload_to=image_location)
 
     class Meta:
