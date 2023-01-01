@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'points',
     'coupon',
     'weather',
+    'wastes'
 
 ]
 
